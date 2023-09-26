@@ -1,4 +1,4 @@
-function sanitizeInputText (text: string, ignoreTransTag: boolean) {
+function sanitizeInputText(text: string, ignoreTransTag: boolean) {
   if (!ignoreTransTag) {
     return text;
   }
@@ -8,11 +8,11 @@ function sanitizeInputText (text: string, ignoreTransTag: boolean) {
     // As both <d> & </d> are matched
     // With the split we retrieve either < or </ as prefix
     const prefix = match.split(number)[0];
-    return `${prefix}Trans${number}>`
+    return `${prefix}Trans${number}>`;
   });
 }
 
-function sanitizeOutputText (text: string, ignoreTransTag: boolean) {
+function sanitizeOutputText(text: string, ignoreTransTag: boolean) {
   if (!ignoreTransTag) {
     return text;
   }
@@ -22,9 +22,8 @@ function sanitizeOutputText (text: string, ignoreTransTag: boolean) {
     // As both <Transd> & </Transd> are matched
     // With the split we retrieve either < or </ as prefix
     const prefix = match.split(`Trans${number}`)[0];
-    return `${prefix}${number}>`
+    return `${prefix}${number}>`;
   });
 }
 
 export { sanitizeInputText, sanitizeOutputText };
-

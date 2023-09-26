@@ -15,6 +15,13 @@
     "formatjs",
     "intl-messageformat"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diptarag/icu-validator"
+  },
+  "bugs": {
+    "url": "https://github.com/diptarag/icu-validator"
+  },
   "author": {
     "name": "Diptarag Mukherjee",
     "email": "diptarag@gmail.com"
@@ -29,12 +36,17 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "start": "rollup -cw"
+    "start": "rollup -cw",
+    "check-types": "tsc --noEmit",
+    "check-formatting": "prettier --check src/**/*.ts",
+    "format": "prettier --write src/**/*.ts",
+    "test": "yarn run check-formatting && yarn run check-types"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@types/node": "^20.6.2",
+    "prettier": "^3.0.3",
     "rollup": "^3.29.2",
     "rollup-plugin-typescript2": "^0.35.0",
     "typescript": "^5.2.2"

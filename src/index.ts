@@ -1,7 +1,24 @@
 import { statSync, Stats } from 'fs';
-import { validateString, validateObject, validateJsonFileSync, validateJsonFile, validateDirectorySync, validateDirectory as validateJsonFilesDirectory } from './validator';
-import { FileValidationResult, ObjectValidationResult, StringValidationResult, ValidationOptions } from './types';
-import { printStringValidation, printObjectValidation, printFileValidation, printDirectoryValidation } from './printer';
+import {
+  validateString,
+  validateObject,
+  validateJsonFileSync,
+  validateJsonFile,
+  validateDirectorySync,
+  validateDirectory as validateJsonFilesDirectory
+} from './validator';
+import {
+  FileValidationResult,
+  ObjectValidationResult,
+  StringValidationResult,
+  ValidationOptions
+} from './types';
+import {
+  printStringValidation,
+  printObjectValidation,
+  printFileValidation,
+  printDirectoryValidation
+} from './printer';
 
 /**
  * Validate if a data source conforms to ICU standard
@@ -22,9 +39,21 @@ import { printStringValidation, printObjectValidation, printFileValidation, prin
  * @param {Intl.Locale} [options.parseOptions.locale] Instance of Intl.Locale to resolve locale-dependent skeleton
  * @returns
  */
-function validate (source: string | object, options?: ValidationOptions) : StringValidationResult | ObjectValidationResult | FileValidationResult | FileValidationResult[] | undefined {
+function validate(
+  source: string | object,
+  options?: ValidationOptions
+):
+  | StringValidationResult
+  | ObjectValidationResult
+  | FileValidationResult
+  | FileValidationResult[]
+  | undefined {
   if (typeof source === 'object') {
-    const objectValidationResult = validateObject(source, options?.parseOptions, options?.ignoreTransTag);
+    const objectValidationResult = validateObject(
+      source,
+      options?.parseOptions,
+      options?.ignoreTransTag
+    );
     if (options?.prettyPrint) {
       printObjectValidation(objectValidationResult as ObjectValidationResult);
     }
@@ -35,13 +64,21 @@ function validate (source: string | object, options?: ValidationOptions) : Strin
   try {
     fsStat = statSync(source);
     if (fsStat.isFile()) {
-      const fileValidationResult = validateJsonFileSync(source, options?.parseOptions, options?.ignoreTransTag);
+      const fileValidationResult = validateJsonFileSync(
+        source,
+        options?.parseOptions,
+        options?.ignoreTransTag
+      );
       if (options?.prettyPrint) {
         printFileValidation(fileValidationResult);
       }
       return fileValidationResult;
     } else if (fsStat.isDirectory()) {
-      const directoryValidationResult = validateDirectorySync(source, options?.parseOptions, options?.ignoreTransTag);
+      const directoryValidationResult = validateDirectorySync(
+        source,
+        options?.parseOptions,
+        options?.ignoreTransTag
+      );
       if (options?.prettyPrint) {
         printDirectoryValidation(directoryValidationResult);
       }
@@ -49,7 +86,11 @@ function validate (source: string | object, options?: ValidationOptions) : Strin
     }
   } catch {
     // The source is an ICU string, validate the string
-    const stringValidationResult = validateString(source, options?.parseOptions, options?.ignoreTransTag);
+    const stringValidationResult = validateString(
+      source,
+      options?.parseOptions,
+      options?.ignoreTransTag
+    );
     if (options?.prettyPrint) {
       printStringValidation(source, stringValidationResult);
     }
@@ -72,12 +113,19 @@ function validate (source: string | object, options?: ValidationOptions) : Strin
  * @param {Intl.Locale} [options.parseOptions.locale] Instance of Intl.Locale to resolve locale-dependent skeleton
  * @returns {Promise<FileValidationResult>}
  */
-async function validateFile (filePath: string, options?: ValidationOptions) : Promise<FileValidationResult> {
-    const fileValidationResult = await validateJsonFile(filePath, options?.parseOptions, options?.ignoreTransTag);
-    if (options?.prettyPrint) {
-      printFileValidation(fileValidationResult);
-    }
-    return fileValidationResult;
+async function validateFile(
+  filePath: string,
+  options?: ValidationOptions
+): Promise<FileValidationResult> {
+  const fileValidationResult = await validateJsonFile(
+    filePath,
+    options?.parseOptions,
+    options?.ignoreTransTag
+  );
+  if (options?.prettyPrint) {
+    printFileValidation(fileValidationResult);
+  }
+  return fileValidationResult;
 }
 
 /**
@@ -94,16 +142,19 @@ async function validateFile (filePath: string, options?: ValidationOptions) : Pr
  * @param {Intl.Locale} [options.parseOptions.locale] Instance of Intl.Locale to resolve locale-dependent skeleton
  * @returns {Promise<FileValidationResult[]>}
  */
-async function validateDirectory (directoryPath: string, options?: ValidationOptions): Promise<FileValidationResult[]> {
-  const directoryValidationResult = await validateJsonFilesDirectory(directoryPath, options?.parseOptions, options?.ignoreTransTag);
-    if (options?.prettyPrint) {
-      printDirectoryValidation(directoryValidationResult);
-    }
-    return directoryValidationResult;
+async function validateDirectory(
+  directoryPath: string,
+  options?: ValidationOptions
+): Promise<FileValidationResult[]> {
+  const directoryValidationResult = await validateJsonFilesDirectory(
+    directoryPath,
+    options?.parseOptions,
+    options?.ignoreTransTag
+  );
+  if (options?.prettyPrint) {
+    printDirectoryValidation(directoryValidationResult);
+  }
+  return directoryValidationResult;
 }
 
-export {
-  validate,
-  validateFile,
-  validateDirectory
-}
+export { validate, validateFile, validateDirectory };

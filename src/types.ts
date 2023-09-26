@@ -12,12 +12,12 @@ interface StringValidationResult {
 }
 
 interface ObjectValidationResult {
-  [key: string]: StringValidationResult | ObjectValidationResult
+  [key: string]: StringValidationResult | ObjectValidationResult;
 }
 
 interface FileValidationResult {
   fileName: string;
-  validationResult: ObjectValidationResult | StringValidationResult
+  validationResult: ObjectValidationResult | StringValidationResult;
 }
 
 interface ValidationOptions {
@@ -26,4 +26,9 @@ interface ValidationOptions {
   ignoreTransTag?: boolean;
 }
 
-export { StringValidationResult, ValidationOptions, ObjectValidationResult, FileValidationResult };
+export {
+  StringValidationResult,
+  ValidationOptions,
+  ObjectValidationResult,
+  FileValidationResult
+};

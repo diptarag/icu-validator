@@ -2,10 +2,18 @@ import path from 'path';
 import { readFileSync, readdirSync } from 'fs';
 import { readFile, readdir } from 'fs/promises';
 import { parse, ParserOptions } from '@formatjs/icu-messageformat-parser';
-import { StringValidationResult, ObjectValidationResult, FileValidationResult } from './types';
+import {
+  StringValidationResult,
+  ObjectValidationResult,
+  FileValidationResult
+} from './types';
 import { sanitizeInputText, sanitizeOutputText } from './utils';
 
-function validateString (text: string, options?: ParserOptions, ignoreTransTag: boolean = false) : StringValidationResult{
+function validateString(
+  text: string,
+  options?: ParserOptions,
+  ignoreTransTag: boolean = false
+): StringValidationResult {
   try {
     // Try to parse the string using format js parser after input sanitization
     // If successful then it's a valid ICU string
@@ -27,7 +35,11 @@ function validateString (text: string, options?: ParserOptions, ignoreTransTag: 
   }
 }
 
-function validateObject (source: object, options?: ParserOptions, ignoreTransTag: boolean = false) {
+function validateObject(
+  source: object,
+  options?: ParserOptions,
+  ignoreTransTag: boolean = false
+) {
   if (typeof source === 'object') {
     let transformedObj: ObjectValidationResult = {};
     for (let [key, value] of Object.entries(source)) {
@@ -41,41 +53,90 @@ function validateObject (source: object, options?: ParserOptions, ignoreTransTag
   }
 }
 
-function validateJsonFileSync (filePath: string, options?: ParserOptions, ignoreTransTag: boolean = false) : FileValidationResult {
+function validateJsonFileSync(
+  filePath: string,
+  options?: ParserOptions,
+  ignoreTransTag: boolean = false
+): FileValidationResult {
   if (!filePath.endsWith('.json')) {
     throw new Error('Only JSON file can be validated');
   }
 
   const fileContent = readFileSync(filePath, 'utf8');
-  const validationResult = validateObject(JSON.parse(fileContent), options, ignoreTransTag);
+  const validationResult = validateObject(
+    JSON.parse(fileContent),
+    options,
+    ignoreTransTag
+  );
   return {
     fileName: filePath,
     validationResult
-  }
+  };
 }
 
-async function validateJsonFile (filePath: string, options?: ParserOptions, ignoreTransTag: boolean = false) : Promise<FileValidationResult> {
+async function validateJsonFile(
+  filePath: string,
+  options?: ParserOptions,
+  ignoreTransTag: boolean = false
+): Promise<FileValidationResult> {
   if (!filePath.endsWith('.json')) {
     throw new Error('Only JSON file can be validated');
   }
 
   const fileContent = await readFile(filePath, 'utf8');
-  const validationResult = validateObject(JSON.parse(fileContent), options, ignoreTransTag);
+  const validationResult = validateObject(
+    JSON.parse(fileContent),
+    options,
+    ignoreTransTag
+  );
   return {
     fileName: filePath,
     validationResult
-  }
+  };
 }
 
-function validateDirectorySync (directoryPath: string, options?: ParserOptions, ignoreTransTag: boolean = false) {
-  const files = readdirSync(directoryPath, 'utf8').filter((file) => file.endsWith('.json'));
+function validateDirectorySync(
+  directoryPath: string,
+  options?: ParserOptions,
+  ignoreTransTag: boolean = false
+) {
+  const files = readdirSync(directoryPath, 'utf8').filter((file) =>
+    file.endsWith('.json')
+  );
 
-  return files.map((file) => validateJsonFileSync(path.resolve(directoryPath, file), options, ignoreTransTag));
+  return files.map((file) =>
+    validateJsonFileSync(
+      path.resolve(directoryPath, file),
+      options,
+      ignoreTransTag
+    )
+  );
 }
 
-async function validateDirectory (directoryPath: string, options?: ParserOptions, ignoreTransTag: boolean = false) {
+async function validateDirectory(
+  directoryPath: string,
+  options?: ParserOptions,
+  ignoreTransTag: boolean = false
+) {
   const files = await readdir(directoryPath, 'utf8');
-  return Promise.all(files.filter((file) => file.endsWith('.json')).map((file) => validateJsonFile(path.resolve(directoryPath, file), options, ignoreTransTag)));
+  return Promise.all(
+    files
+      .filter((file) => file.endsWith('.json'))
+      .map((file) =>
+        validateJsonFile(
+          path.resolve(directoryPath, file),
+          options,
+          ignoreTransTag
+        )
+      )
+  );
 }
 
-export { validateString, validateObject, validateJsonFile, validateJsonFileSync, validateDirectorySync, validateDirectory };
+export {
+  validateString,
+  validateObject,
+  validateJsonFile,
+  validateJsonFileSync,
+  validateDirectorySync,
+  validateDirectory
+};
