@@ -1,3 +1,5 @@
+import { StringValidationResult } from "./types";
+
 function sanitizeInputText(text: string, ignoreTransTag: boolean) {
   if (!ignoreTransTag) {
     return text;
@@ -26,4 +28,29 @@ function sanitizeOutputText(text: string, ignoreTransTag: boolean) {
   });
 }
 
-export { sanitizeInputText, sanitizeOutputText };
+function isStringValidationResult(obj: any): obj is StringValidationResult {
+  return (
+    obj !== null && typeof obj === 'object' && '__icu_validator_error' in obj
+  );
+}
+
+function isInvalidAtAnyLevel(obj: any, key: string) {
+  for (const prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      if (prop === key && obj[prop] === true) {
+        return true;
+      }
+
+      if (typeof obj[prop] === 'object' && obj[prop] !== null) {
+        // Recursively check the nested object
+        if (isInvalidAtAnyLevel(obj[prop], key)) {
+          return true; // Key found and its value is true in the nested object
+        }
+      }
+    }
+  }
+
+  return false; // Key not found or its value is not true at any level
+}
+
+export { sanitizeInputText, sanitizeOutputText, isStringValidationResult, isInvalidAtAnyLevel };

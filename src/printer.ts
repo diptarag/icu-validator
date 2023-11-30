@@ -4,6 +4,7 @@ import {
   ObjectValidationResult,
   FileValidationResult
 } from './types';
+import { isStringValidationResult } from './utils';
 
 function printStringValidation(
   text: string,
@@ -21,12 +22,6 @@ function printStringValidation(
       `Location :- ${JSON.stringify(validationResult.result.location)}`
     );
   }
-}
-
-function isStringValidationResult(obj: any): obj is StringValidationResult {
-  return (
-    obj !== null && typeof obj === 'object' && '__icu_validator_error' in obj
-  );
 }
 
 function _printObjectValidationRec(
@@ -63,7 +58,10 @@ function printObjectValidation(validationResult: ObjectValidationResult) {
   }
 }
 
-function printFileValidation(fileValidationResult: FileValidationResult) {
+function printFileValidation(fileValidationResult: FileValidationResult, verbose: boolean = false) {
+  if (fileValidationResult.isValid && !verbose) {
+    return;
+  }
   console.log(
     kleur.bgGreen(`Validating file :- ${fileValidationResult.fileName}`)
   );
@@ -76,9 +74,10 @@ function printFileValidation(fileValidationResult: FileValidationResult) {
 }
 
 function printDirectoryValidation(
-  directoryValidationResult: FileValidationResult[]
+  directoryValidationResult: FileValidationResult[],
+  verbose: boolean = false
 ) {
-  directoryValidationResult.forEach((value) => printFileValidation(value));
+  directoryValidationResult.forEach((value) => printFileValidation(value, verbose));
 }
 
 export {

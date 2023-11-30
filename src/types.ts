@@ -16,12 +16,14 @@ interface ObjectValidationResult {
 }
 
 interface FileValidationResult {
+  isValid: boolean;
   fileName: string;
   validationResult: ObjectValidationResult | StringValidationResult;
 }
 
 interface ValidationOptions {
   prettyPrint?: boolean;
+  verbose?: boolean;
   parseOptions?: ParserOptions;
   ignoreTransTag?: boolean;
 }

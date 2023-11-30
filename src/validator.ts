@@ -7,7 +7,7 @@ import {
   ObjectValidationResult,
   FileValidationResult
 } from './types';
-import { sanitizeInputText, sanitizeOutputText } from './utils';
+import { isInvalidAtAnyLevel, sanitizeInputText, sanitizeOutputText } from './utils';
 
 function validateString(
   text: string,
@@ -69,6 +69,7 @@ function validateJsonFileSync(
     ignoreTransTag
   );
   return {
+    isValid: !isInvalidAtAnyLevel(validationResult, '__icu_validator_error'),
     fileName: filePath,
     validationResult
   };
@@ -90,6 +91,7 @@ async function validateJsonFile(
     ignoreTransTag
   );
   return {
+    isValid: !isInvalidAtAnyLevel(validationResult, '__icu_validator_error'),
     fileName: filePath,
     validationResult
   };

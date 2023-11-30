@@ -70,7 +70,7 @@ function validate(
         options?.ignoreTransTag
       );
       if (options?.prettyPrint) {
-        printFileValidation(fileValidationResult);
+        printFileValidation(fileValidationResult, options?.verbose);
       }
       return fileValidationResult;
     } else if (fsStat.isDirectory()) {
@@ -80,7 +80,7 @@ function validate(
         options?.ignoreTransTag
       );
       if (options?.prettyPrint) {
-        printDirectoryValidation(directoryValidationResult);
+        printDirectoryValidation(directoryValidationResult, options?.verbose);
       }
       return directoryValidationResult;
     }
@@ -123,7 +123,7 @@ async function validateFile(
     options?.ignoreTransTag
   );
   if (options?.prettyPrint) {
-    printFileValidation(fileValidationResult);
+    printFileValidation(fileValidationResult, options?.verbose);
   }
   return fileValidationResult;
 }
@@ -152,7 +152,7 @@ async function validateDirectory(
     options?.ignoreTransTag
   );
   if (options?.prettyPrint) {
-    printDirectoryValidation(directoryValidationResult);
+    printDirectoryValidation(directoryValidationResult, options?.verbose);
   }
   return directoryValidationResult;
 }

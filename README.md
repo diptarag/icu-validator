@@ -110,6 +110,9 @@ Options include -
 ### `prettyPrint` - default (`false`)
 Print the validation result and errors in console.
 
+### `verbose` - default (`false`)
+Provide complete execution logs when printing the results.
+
 ### `ignoreTransTag` - default (`false`)
 If you are using `react-i18next` with ICU, you will encounter situations where you need to externalize HTML elements. For react-i18next, the recommended method is [Trans component](https://react.i18next.com/latest/trans-component). The externalized string resembles a format - ```Please click <0>here</0>```. These are usually termed as invalid strings. Use this option if you want to ignore such tags from validation rule.
 
