@@ -30,6 +30,7 @@ import {
  * @param {string | object} source Validation source - it can be a single ICU string, an object of key value pair, a JSON file path or a directory path containing JSON files
  * @param {ValidationOptions} [options] options to customize the output and validation rules
  * @param {boolean} [options.prettyPrint=false] if the output should be printed on console
+ * @param {boolean} [options.verbose=false] if all scanned files should be printed on console, only works if prettyPrint is enabled
  * @param {boolean} [options.ignoreTransTag=false] special handling for i18next Trans component generated output
  * @param {ParserOptions} [options.parseOptions] options to customize the validation rule
  * @param {boolean} [options.parseOptions.ignoreTag=false] Whether to treat HTML/XML tags as string literal
@@ -104,6 +105,7 @@ function validate(
  * @param {string} filePath Path of the JSON file
  * @param {ValidationOptions} [options] options to customize the output and validation rules
  * @param {boolean} [options.prettyPrint=false] if the output should be printed on console
+ * @param {boolean} [options.verbose=false] if valid file output should also be printed on console, only works if prettyPrint is enabled
  * @param {boolean} [options.ignoreTransTag=false] special handling for i18next Trans component generated output
  * @param {ParserOptions} [options.parseOptions] options to customize the validation rule
  * @param {boolean} [options.parseOptions.ignoreTag=false] Whether to treat HTML/XML tags as string literal
@@ -133,6 +135,7 @@ async function validateFile(
  * @param {string} directoryPath Path of the directory containing locale JSON files
  * @param {ValidationOptions} [options] options to customize the output and validation rules
  * @param {boolean} [options.prettyPrint=false] if the output should be printed on console
+ * @param {boolean} [options.verbose=false] if all scanned files should be printed on console, only works if prettyPrint is enabled
  * @param {boolean} [options.ignoreTransTag=false] special handling for i18next Trans component generated output
  * @param {ParserOptions} [options.parseOptions] options to customize the validation rule
  * @param {boolean} [options.parseOptions.ignoreTag=false] Whether to treat HTML/XML tags as string literal

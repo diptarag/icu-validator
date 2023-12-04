@@ -63,13 +63,13 @@ function printFileValidation(fileValidationResult: FileValidationResult, verbose
     return;
   }
   console.log(
-    kleur.bgGreen(`Validating file :- ${fileValidationResult.fileName}`)
+    kleur.black().bgGreen(`Validating file :- ${fileValidationResult.fileName}`)
   );
   console.log('\n');
   printObjectValidation(
     fileValidationResult.validationResult as ObjectValidationResult
   );
-  console.log(kleur.bgGreen(`Done!!!`));
+  console.log(kleur.black().bgGreen(`Done!!!`));
   console.log('\n');
 }
 

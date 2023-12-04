@@ -1,6 +1,6 @@
 {
   "name": "icu-validator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Check if a text conforms to ICU format - supports individual string, JSON files or folders contaning JSON files",
   "keywords": [
     "i18n",
